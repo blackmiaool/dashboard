@@ -158,15 +158,8 @@ $(".crop-frame .border").on("mousedown", function () {
 });
 $(".actions .export-config").on("click", function () {
     showTable(".export-config-form");
-    $(".export-config-form textarea").val(JSON.stringify(configs));
+    $(".export-config textarea").val(JSON.stringify(configs));
 });
-$(".actions .import-config").on("click", function () {
-    showTable(".import-config-form");
-});
-$(".import-config-form .submit").on("click", function () {
-    configs = $(".import-config-form textarea").val();
-    configs = JSON.parse(configs);
-    setObj("config", configs);
-    hideTable();
-    updateView();
+$(".import-config").on("click", function () {
+    showTable(".import-config.form");
 });

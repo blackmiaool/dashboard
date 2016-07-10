@@ -3035,11 +3035,13 @@ label {
 #wrap > .mask.active {
   opacity: 1;
 }
-.export-config.form {
+.export-config-form,
+.import-config-form {
   width: 700px;
   text-align: center;
 }
-.export-config.form textarea {
+.export-config-form textarea,
+.import-config-form textarea {
   width: 100%;
 }
 .form {

@@ -17,7 +17,8 @@
       <div class="actions">
           <button class="add-site btn btn-primary">Add</button>
        <button class="export-config btn btn-primary">Export</button>
-       <label><input class="edit-config" type="checkbox">Edit</label>
+       <button class="import-config btn btn-primary">Import</button>
+<!--       <label><input class="edit-config" type="checkbox">Edit</label>-->
       </div>
        
        <div class="mask hide"></div>
@@ -26,8 +27,12 @@
            <input type="url" class="form-control url">
            <button class="btn btn-primary submit">Submit</button>
        </div>
-       <div class="export-config form hide">
+       <div class="export-config-form form hide">
            <textarea name="" id="" cols="30" rows="10"></textarea>
+       </div>
+       <div class="import-config-form form hide">
+           <textarea name="" id="" cols="30" rows="10"></textarea>
+           <button class="btn btn-primary submit">Import</button>
        </div>
        <div class="iframe-wrap">
            <iframe scrolling="no"  src="http://bilibili2.com" frameborder="0"></iframe>
