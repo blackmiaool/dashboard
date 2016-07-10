@@ -3143,6 +3143,7 @@ label {
 }
 .component-wrap {
   display: inline-block;
+  vertical-align: top;
 }
 .component-wrap > .component {
   position: relative;
