@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>dashboard</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/poli.js"></script>
+    <script src="js/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body ng-app="dashboard" ng-controller="RootController">
+    <div data-code="bilibili" class="area" ng-controller="BilibiliController">
+        <div class="wrap">
+            <div class="area-title">bilibili</div>
+            <div class="movie" ng-repeat="li in list">
+                <img ng-src="{{li.square_cover}}" class="thumb">
+                <span class="name" ng-bind="li.title"></span>
+                <span class="tag" ng-bind="li.bgmcount" ng-class="{active:li.new}"></span>
+            </div>
+        </div>
+    </div>
+    <div data-code="gamersky" class="area" ng-controller="GamerskyController">
+        <div class="area-title">gamersky</div>
+    </div>
+    
+    <div data-code="bilibili-feed" class="area" ng-if="showBilibiliFeed">
+        <iframe  scrolling="no" ng-src="{{bilibiliSite}}" frameborder="0"></iframe>
+    </div>
+    <div data-code="zhihu" class="area" ng-controller="ZhihuController">
+        <div class="area-title">zhihu</div>
+    </div>
+    <script src="js/angular.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="http://127.0.0.1:35729/livereload.js?ext=Chrome&amp;extver=2.1.0"></script>
+</body>
+
+</html>

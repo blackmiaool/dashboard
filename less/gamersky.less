@@ -1,0 +1,34 @@
+display:inline-block;
+ul{
+    padding-left: 0;    
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    width: 450px;
+}
+li{
+    .time{
+        transition: transform 0.1s linear;
+    }
+    &:hover{
+        background-color: #eee;
+        .time{
+            
+            transform: translateX(-10px);
+        }
+    }
+}
+a{
+    color: #151515;
+    text-decoration: none;
+    &:visited{
+        color: grey;
+    }
+}
+.txt{
+    display: inline-block;
+}
+.time{
+    display: inline-block;
+    float: right;
+}
