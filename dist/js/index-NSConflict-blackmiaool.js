@@ -1,19 +1,157 @@
 "use strict";
 
 (function () {
+    $.fn.hide = function () {
+        this.addClass("hide");
+        return this;
+    };
+    $.fn.show = function () {
+        this.removeClass("hide");
+        return this;
+    };
+    $.fn.isShown = function () {
+        return !this.hasClass("hide");
+    };
+    $.fn.toggleShow = function () {
+        if (this.hasClass("hide")) {
+            this.removeClass("hide");
+        } else {
+            this.addClass("hide");
+        }
+    };
+    $.fn.active = function () {
+        var state = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
 
-    updateView();
+        this.addClass("active");
+        return this;
+    };
+    $.fn.inactive = function () {
+        var state = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+
+
+        this.removeClass("active");
+        return this;
+    };
+    $.fn.isActive = function () {
+        return this.hasClass("active");
+    };
+
+    var $mask = $("#wrap>.mask");
+    var $cropFrame = $(".crop-frame");
+    var $iframeWrap = $(".iframe-wrap");
+    var $iframe = $iframeWrap.find('iframe');
+    function getObj(name) {
+        var def = arguments.length <= 1 || arguments[1] === undefined ? "{}" : arguments[1];
+
+        return JSON.parse(localStorage.getItem(name) || def);
+    }
+    function setObj(name, value) {
+        localStorage.setItem(name, JSON.stringify(value));
+    }
+    var configs = getObj("config", "[]");
+    function showTable(tableSelector) {
+
+        var $table = $(tableSelector);
+        $mask.show();
+        $table.show();
+        setTimeout(function () {
+            $mask.active();
+            $table.show().active();
+        });
+    }
+
+    function hideTable() {
+        $mask.inactive().hide();
+        $("#wrap>.form").inactive().hide();
+    }
+    $mask.on("click", hideTable);
+
+    $(".add-site").on("click", function () {
+        showTable(".add-site-table");
+    });
+    var cropingUrl = void 0;
+
+    function cropUrl(url) {
+
+        if (!url) {
+            url = $(".add-site-table .url").val();
+        }
+
+        if (!url.match(/^http/)) {
+            url = "http://" + url;
+        }
+        cropingUrl = url;
+        $iframe.attr("src", cropingUrl);
+        hideTable();
+        console.log(url);
+    }
+    $(".add-site-table .submit").on("click", function () {
+        var url = $(".add-site-table .url").val();
+        cropUrl(url);
+    });
+    cropUrl("http://bilibili.com");
+    var movingDirection = void 0;
+
+    $iframeWrap.on("mousemove", function (e) {
+        var x = e.clientX;
+        var y = e.clientY;
+        if (movingDirection) {
+            if (movingDirection == "top") {
+                $cropFrame.css("top", y);
+            } else if (movingDirection == "left") {
+                $cropFrame.css("left", x);
+            } else if (movingDirection == "right") {
+                $cropFrame.css("right", document.body.clientWidth - x);
+            } else if (movingDirection == "bottom") {
+                $cropFrame.css("bottom", $iframeWrap.height() - y);
+            }
+        }
+        return false;
+    });
+    $iframeWrap.on("mouseup", function (e) {
+        movingDirection = undefined;
+    });
+    $iframeWrap.find(".enable-website").on("change", function () {
+        var enable = $(this).prop("checked");
+        if (enable) {
+            $iframe.active();
+            $iframeWrap.find(".border").hide();
+        } else {
+            $iframe.inactive();
+            $iframeWrap.find(".border").show();
+        }
+        console.log();
+    });
     var testConfig = {
-        height: "462px",
-        left: "1121px",
-        width: "397px",
-        sx: "1920px",
-        sy: "678px",
-        top: "10px",
+        height: 462,
+        left: 1121,
+        right: 402,
+        sx: 1920,
+        sy: 678,
+        top: 10,
         url: "http://bilibili.com"
     };
-    //    cropUrl("http://bilibili.com")
-    //    addConfig(testConfig);
+    addConfig(testConfig);
+    function addConfig() {
+        configs.push(configs);
+        setObj("config", configs);
+    }
+    $iframeWrap.find(".submit").on("click", function () {
+        var config = {
+            top: parseInt($cropFrame.css("top")),
+            height: $cropFrame.height(),
+            right: parseInt($cropFrame.css("right")),
+            left: parseInt($cropFrame.css("left")),
+            url: cropingUrl,
+            sx: $iframeWrap.width(),
+            sy: $iframeWrap.height()
+        };
+        addConfig(config);
+    });
+    $(".crop-frame .border").on("mousedown", function () {
+        var direction = $(this).data("pos");
+        movingDirection = direction;
+    });
 
     //    let mod = angular.module("dashboard", []);
     //    mod.controller("BilibiliController", ["$scope", "$http", function (sp, $http) {

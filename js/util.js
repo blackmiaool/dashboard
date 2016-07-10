@@ -1,48 +1,40 @@
-"use strict";
-
 $.fn.hide = function () {
     this.addClass("hide");
     return this;
-};
+}
 $.fn.show = function () {
     this.removeClass("hide");
     return this;
-};
+}
 $.fn.isShown = function () {
     return !this.hasClass("hide");
-};
+}
 $.fn.toggleShow = function () {
     if (this.hasClass("hide")) {
         this.removeClass("hide");
     } else {
         this.addClass("hide");
     }
-};
-$.fn.active = function () {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
-
+}
+$.fn.active = function (state = true) {
     this.addClass("active");
     return this;
-};
-$.fn.inactive = function () {
-    var state = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
-
+}
+$.fn.inactive = function (state = true) {
 
     this.removeClass("active");
     return this;
-};
+}
 $.fn.isActive = function () {
     return this.hasClass("active");
-};
-var $mask = $("#wrap>.mask");
-var $cropFrame = $(".crop-frame");
-var $iframeWrap = $(".iframe-wrap");
-var $iframe = $iframeWrap.find('iframe');
-var configs = getObj("config", "[]");
+}
+let $mask = $("#wrap>.mask");
+let $cropFrame = $(".crop-frame");
+let $iframeWrap = $(".iframe-wrap");
+let $iframe = $iframeWrap.find('iframe');
+let configs = getObj("config", "[]");
 
-function getObj(name) {
-    var def = arguments.length <= 1 || arguments[1] === undefined ? "{}" : arguments[1];
-
+function getObj(name, def = "{}") {
     return JSON.parse(localStorage.getItem(name) || def);
 }
 
@@ -52,13 +44,14 @@ function setObj(name, value) {
 
 function showTable(tableSelector) {
 
-    var $table = $(tableSelector);
+    let $table = $(tableSelector);
     $mask.show();
     $table.show();
     setTimeout(function () {
         $mask.active();
         $table.show().active();
-    });
+    })
+
 }
 
 function hideTable() {
@@ -68,9 +61,9 @@ function hideTable() {
 $mask.on("click", hideTable);
 
 $(".add-site").on("click", function () {
-    showTable(".add-site-table");
+    showTable(".add-site-table")
 });
-var cropingUrl = void 0;
+let cropingUrl;
 
 function cropUrl(url) {
 
@@ -88,14 +81,14 @@ function cropUrl(url) {
     console.log(url);
 }
 $(".add-site-table .submit").on("click", function () {
-    var url = $(".add-site-table .url").val();
+    let url = $(".add-site-table .url").val();
     cropUrl(url);
 });
-var movingDirection = void 0;
+let movingDirection;
 
 $iframeWrap.on("mousemove", function (e) {
-    var x = e.clientX;
-    var y = e.clientY;
+    let x = e.clientX;
+    let y = e.clientY;
     if (movingDirection) {
         if (movingDirection == "top") {
             $cropFrame.css("top", y);
@@ -113,7 +106,7 @@ $iframeWrap.on("mouseup", function (e) {
     movingDirection = undefined;
 });
 $iframeWrap.find(".enable-website").on("change", function () {
-    var enable = $(this).prop("checked");
+    let enable = $(this).prop("checked");
     if (enable) {
         $iframe.active();
         $iframeWrap.find(".border").hide();
@@ -121,42 +114,66 @@ $iframeWrap.find(".enable-website").on("change", function () {
         $iframe.inactive();
         $iframeWrap.find(".border").show();
     }
-    console.log();
-});
-function updateView() {
+    console.log()
+})
+function updateView(){
     $("#content-wrap").empty();
-    configs.forEach(function (v, i) {
-        var component = $("<div class=\"component-wrap\">\n                <div class=\"component\" style=\"width:" + v.width + ";height:" + v.height + ";\">\n                    <iframe class=\"cropped-iframe\" scrolling=\"no\"  src=\"" + v.url + "\" frameborder=\"0\" style=\"width:" + v.sx + ";height:" + v.sy + ";left:-" + v.left + ";top:-" + v.top + ";\"></iframe>\n                </div>\n                <div class=\"tool-bar\">\n                \n                </div>\n            </div>\n        ");
+    configs.forEach(function(v,i){
+        let component=$(`<div class="component-wrap">
+                <div class="component" style="width:${v.width};height:${v.height};">
+                    <iframe class="cropped-iframe" scrolling="no"  src="${v.url}" frameborder="0" style="width:${v.sx};height:${v.sy};left:-${v.left};top:-${v.top};"></iframe>
+                </div>
+                <div class="tool-bar">
+                
+                </div>
+            </div>
+        `)
         $("#content-wrap").append($(component));
-    });
+    })
 }
 function addConfig(config) {
     configs.push(config);
     setObj("config", configs);
     updateView();
-    $iframe.attr("src", "");
+    $iframe.attr("src","");
 }
 $iframeWrap.find(".submit").on("click", function () {
-    var left = parseInt($cropFrame.css("left"));
-    var right = parseInt($cropFrame.css("right"));
-    var width = $iframeWrap.width() - left - right;
-    var config = {
+    let left=parseInt($cropFrame.css("left"));
+    let right=parseInt($cropFrame.css("right"));
+    let width=$iframeWrap.width()-left-right;
+    let config = {
         top: $cropFrame.css("top"),
-        height: $cropFrame.height() + "px",
-        width: width + "px",
-        left: left + "px",
+        height: $cropFrame.height()+"px",
+        width:width+"px" ,
+        left: left+"px",
         url: cropingUrl,
-        sx: $iframeWrap.width() + "px",
-        sy: $iframeWrap.height() + "px"
-    };
+        sx: $iframeWrap.width()+"px",
+        sy: $iframeWrap.height()+"px",
+    }
     $iframeWrap.inactive();
     addConfig(config);
-});
+})
 $(".crop-frame .border").on("mousedown", function () {
-    var direction = $(this).data("pos");
+    let direction = $(this).data("pos");
     movingDirection = direction;
-});
-$(".actions .export-config").on("click", function () {
-    showTable(".export-config");
+
+})
+$(".actions .export-config").on("click",function(){
+    showTable(".export-config")
     $(".export-config textarea").val(JSON.stringify(configs));
-});
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

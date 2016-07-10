@@ -82,7 +82,6 @@ function cropUrl(url) {
         url = "http://" + url;
     }
     cropingUrl = url;
-    $iframeWrap.active();
     $iframe.attr("src", cropingUrl);
     hideTable();
     console.log(url);
@@ -124,9 +123,8 @@ $iframeWrap.find(".enable-website").on("change", function () {
     console.log();
 });
 function updateView() {
-    $("#content-wrap").empty();
     configs.forEach(function (v, i) {
-        var component = $("<div class=\"component-wrap\">\n                <div class=\"component\" style=\"width:" + v.width + ";height:" + v.height + ";\">\n                    <iframe class=\"cropped-iframe\" scrolling=\"no\"  src=\"" + v.url + "\" frameborder=\"0\" style=\"width:" + v.sx + ";height:" + v.sy + ";left:-" + v.left + ";top:-" + v.top + ";\"></iframe>\n                </div>\n                <div class=\"tool-bar\">\n                \n                </div>\n            </div>\n        ");
+        var component = $("<div class=\"component-wrap\">\n                <div class=\"component\">\n                    <iframe class=\"cropped-iframe\" scrolling=\"no\"  src=\"" + v.url + "\" frameborder=\"0\" style=\"width:" + v.sx + ";height:" + v.sy + ";left:" + v.left + "px;top:" + v.top + "px;\"></iframe>\n                </div>\n            </div>\n        ");
         $("#content-wrap").append($(component));
     });
 }
@@ -137,26 +135,18 @@ function addConfig(config) {
     $iframe.attr("src", "");
 }
 $iframeWrap.find(".submit").on("click", function () {
-    var left = parseInt($cropFrame.css("left"));
-    var right = parseInt($cropFrame.css("right"));
-    var width = $iframeWrap.width() - left - right;
     var config = {
-        top: $cropFrame.css("top"),
-        height: $cropFrame.height() + "px",
-        width: width + "px",
-        left: left + "px",
+        top: parseInt($cropFrame.css("top")),
+        height: $cropFrame.height(),
+        right: parseInt($cropFrame.css("right")),
+        left: parseInt($cropFrame.css("left")),
         url: cropingUrl,
-        sx: $iframeWrap.width() + "px",
-        sy: $iframeWrap.height() + "px"
+        sx: $iframeWrap.width(),
+        sy: $iframeWrap.height()
     };
-    $iframeWrap.inactive();
     addConfig(config);
 });
 $(".crop-frame .border").on("mousedown", function () {
     var direction = $(this).data("pos");
     movingDirection = direction;
-});
-$(".actions .export-config").on("click", function () {
-    showTable(".export-config");
-    $(".export-config textarea").val(JSON.stringify(configs));
 });

@@ -1,4 +1,15 @@
 @import "mixin.less";
+@import "bootstrap/forms.less";
+@import "bootstrap/input-groups.less";
+@import "bootstrap/buttons.less";
+@import "bootstrap/button-groups.less";
+@import "bootstrap/variables.less";
+@import "bootstrap/mixins.less";
+@import "bootstrap/alerts.less";
+@import "bootstrap/glyphicons.less";
+@import "bootstrap/dropdowns.less";
+@import "bootstrap/progress-bars.less";
+@import "bootstrap/tables.less";
 [data-code="bilibili"] {
     @import "bilibili.less";
 }
@@ -7,11 +18,18 @@
     @import "gamersky.less";
 }
 
-[data-code="bilibili-feed"] {    
-   @import "bilibili-feed.less";
+[data-code="bilibili-feed"] {
+    @import "bilibili-feed.less";
 }
-[data-code="zhihu"] {    
-   @import "zhihu.less";
+
+[data-code="zhihu"] {
+    @import "zhihu.less";
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
 }
 
 * {
@@ -23,6 +41,139 @@
 .area-title {
     margin-left: 0px;
 }
-.area{
+
+.area {
     vertical-align: top;
+}
+
+* {
+    outline: none;
+}
+
+label {
+    font-weight: normal;
+}
+
+#wrap {
+    .abs-fill;
+    overflow: auto;
+    >.mask {
+        .abs-fill;
+        z-index: 999;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
+        &.active {
+            opacity: 1;
+        }
+    }
+}
+
+.export-config.form {
+    width: 700px;
+    text-align: center;
+    textarea {
+        width: 100%;
+    }
+}
+
+.form {
+    .transform-center;
+    margin-top: 60px;
+    transition: margin-top 0.3s ease-out;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    &.active {
+        z-index: 1000;
+        margin-top: 0;
+    }
+}
+
+.add-site-table {
+    width: 600px;
+    .url {
+        margin-bottom: 10px;
+    }
+    .submit {}
+}
+
+.iframe-wrap {
+    .abs-fill;
+    bottom: auto;
+    height: 100%;
+    background-color: black;
+    display: none;
+    &.active {
+        display: block;
+    }
+    iframe {
+        .abs-fill;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        &.active {
+            pointer-events: all;
+        }
+    }
+    .float-area {
+        position: fixed;
+        top: 5px;
+        left: 5px;
+        background-color: white;
+        border-radius: 5px;
+    }
+    .crop-frame {
+        position: absolute;
+        //        top: 50px;
+        left: 100px;
+        right: 100px;
+        //        height: 250px;
+        top: 30%;
+        bottom: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+        pointer-events: none;
+        .border {
+            pointer-events: all;
+            cursor: move;
+            position: absolute;
+            background-color: #00a1d6;
+            @width: 10px;
+            width: @width;
+            &.top,
+            &.bottom {
+                height: 10px;
+                width: 100%;
+            }
+            &.top {
+                top: -@width;
+            }
+            &.bottom {
+                bottom: -@width;
+            }
+            &.left,
+            &.right {
+                width: @width;
+                height: 100%;
+            }
+            &.left {
+                left: -@width;
+            }
+            &.right {
+                right: -@width;
+            }
+        }
+    }
+}
+
+.component-wrap {
+    display: inline-block;
+    >.component {
+        position: relative;
+        overflow: hidden;
+        >.cropped-iframe {
+            position: absolute;
+        }
+    }
+    &:hover {}
 }

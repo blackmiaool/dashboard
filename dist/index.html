@@ -12,6 +12,43 @@
 </head>
 
 <body ng-app="dashboard" ng-controller="RootController">
+   <div id="wrap">
+      <div id="content-wrap"></div>
+      <div class="actions">
+          <button class="add-site btn btn-primary">Add</button>
+       <button class="export-config btn btn-primary">Export</button>
+       <label><input class="edit-config" type="checkbox">Edit</label>
+      </div>
+       
+       <div class="mask hide"></div>
+       <div class="add-site-table form hide">
+           <label>Site url:</label>
+           <input type="url" class="form-control url">
+           <button class="btn btn-primary submit">Submit</button>
+       </div>
+       <div class="export-config form hide">
+           <textarea name="" id="" cols="30" rows="10"></textarea>
+       </div>
+       <div class="iframe-wrap">
+           <iframe scrolling="no"  src="http://bilibili2.com" frameborder="0"></iframe>
+           <div class="float-area">
+               <div class="tip">Select the area you want and submit.</div>
+               <button class="submit btn btn-success">Submit</button>
+               <label><input class="enable-website" type="checkbox">Enable website(can't move area)</label>
+           </div>
+           
+           <div class="crop-frame">
+               <div class="border top" data-pos="top"></div>
+               <div class="border bottom" data-pos="bottom"></div>
+               <div class="border right" data-pos="right"></div>
+               <div class="border left" data-pos="left"></div>
+           </div>
+       </div>
+   </div>
+    
+
+
+<!--
     <div data-code="bilibili" class="area" ng-controller="BilibiliController">
         <div class="wrap">
             <div class="area-title">bilibili</div>
@@ -32,7 +69,8 @@
     <div data-code="zhihu" class="area" ng-controller="ZhihuController">
         <div class="area-title">zhihu</div>
     </div>
-    <script src="js/angular.min.js"></script>
+-->
+   <script src="js/util.js"></script>
     <script src="js/index.js"></script>
     <script src="http://127.0.0.1:35729/livereload.js?ext=Chrome&amp;extver=2.1.0"></script>
 </body>

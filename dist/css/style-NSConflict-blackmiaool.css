@@ -3035,35 +3035,30 @@ label {
 #wrap > .mask.active {
   opacity: 1;
 }
-.export-config.form {
-  width: 700px;
-  text-align: center;
-}
-.export-config.form textarea {
-  width: 100%;
-}
-.form {
+.add-site-table {
+  width: 600px;
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  margin-top: 60px;
-  transition: margin-top 0.3s ease-out;
+  padding: 10px;
   background-color: white;
   border-radius: 5px;
-  padding: 10px;
+  margin-top: 60px;
+  transition: margin-top 0.3s ease-out;
 }
-.form.active {
+.add-site-table.active {
   z-index: 1000;
   margin-top: 0;
 }
-.add-site-table {
-  width: 600px;
-}
 .add-site-table .url {
   margin-bottom: 10px;
+}
+.add-site {
+  padding: 11px 35px 15px;
+  font-size: 20px;
 }
 .iframe-wrap {
   position: absolute;
@@ -3075,10 +3070,6 @@ label {
   bottom: auto;
   height: 100%;
   background-color: black;
-  display: none;
-}
-.iframe-wrap.active {
-  display: block;
 }
 .iframe-wrap iframe {
   position: absolute;
@@ -3138,14 +3129,4 @@ label {
 }
 .iframe-wrap .crop-frame .border.right {
   right: -10px;
-}
-.component-wrap {
-  display: inline-block;
-}
-.component-wrap > .component {
-  position: relative;
-  overflow: hidden;
-}
-.component-wrap > .component > .cropped-iframe {
-  position: absolute;
 }
